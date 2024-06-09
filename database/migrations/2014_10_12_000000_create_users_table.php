@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('alamat');
+            $table->string('nohp');
+            $table->string('jk');
             $table->string('password');
-            $table->rememberToken();
+            $table->string('role')->default('Pelanggan');
             $table->timestamps();
         });
     }
