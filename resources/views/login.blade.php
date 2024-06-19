@@ -35,17 +35,18 @@
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h4>Login</h4>
-                                @if (session()->has('loginErrors'))
-                                    <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">
-                                        {{ session('loginErrors') }}
-                                    </div>
-                                @endif
+
                             </div>
 
                             <div class="card-body">
                                 <form action="#" method="post">
                                     @csrf
                                     <div class="form-group">
+                                        @if (session()->has('loginErrors'))
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ session('loginErrors') }}
+                                            </div>
+                                        @endif
                                         <label for="email">Email</label>
                                         <input id="email" type="email"
                                             class="form-control @error('email') is-invalid @enderror" name="email"

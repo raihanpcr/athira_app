@@ -25,9 +25,37 @@ class UserController extends Controller
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']);
-        // dd($data);
+
         User::create($validatedData);
-        // $request->session()->flash('success', 'Task was successful!');
+        
         return redirect('/login')->with('success', 'Task was successful!');
+    }
+
+    public function showProfile(User $user){
+
+        $data = [
+            "title" => "Detail Data",
+            "profile" => $user
+        ];
+
+        // dd($data);s
+
+        return view('profile', $data);
+    }
+
+    public function update(Request $request, $id){
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'alamat' => 'required',
+            'nohp' => 'required',
+        ]);
+
+        $profile = User::findOrFail($id);
+
+        $profile->update($validatedData);
+
+        return redirect('/keberangkatan')->with('success', 'Data profile berhasil diedit');
     }
 }

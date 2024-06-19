@@ -9,7 +9,8 @@
         <ul class="sidebar-menu">
             <li><a class="nav-link" href="/keberangkatan"><i class="fas fa-fire"></i>
                     <span>Dashboard</span></a>
-            <li><a class="nav-link" href="/profile"><i class="fa fa-solid fa-user"></i> <span>Profile</span></a>
+            <li><a class="nav-link" href="{{ route('detailProfil', Str::ucfirst(auth()->user()->id)) }}"><i
+                        class="fa fa-solid fa-user"></i> <span>Profile</span></a>
             </li>
             <li><a class="nav-link" href="/pemesanan"><i class="fa fa-solid fa-book"></i>
                     <span>Pemesanan</span></a></li>

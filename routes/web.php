@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeberangkatanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Models\Keberangkatan;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,27 +25,34 @@ Route::middleware('auth')->group(function () {
     //dashboard
 
     //keberangkatan
-    Route::get('/keberangkatan', [KeberangkatanController::class, 'index']);
     Route::get('/formKeberangkatan', function () {
         return view('keberangkatan');
     });
-    Route::delete('/hapusKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'destroy'])->name('hapusKeberangkatan');
+    Route::get('/keberangkatan', [KeberangkatanController::class, 'index']);
+    Route::get('/detailKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'showDetail'])->name('detailKeberangkatan');
     Route::post('/tambahKeberangkatan', [KeberangkatanController::class, 'store']);
+    Route::put('/updateDataKeberangkatan/{id}', [KeberangkatanController::class, 'update'])->name('updateDataKeberangkatan');
+    Route::delete('/hapusKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'destroy'])->name('hapusKeberangkatan');
 
-    Route::get('/logout', [LoginController::class, 'logout']);
-
+    
+    // Profile
     Route::get('/profile', function () {
         return view('profile');
     });
+    
+    Route::get('/profile/detail/{id}', [UserController::class,'showProfile'])->name('detailProfil');
+    Route::put('/profile/update/{id}', [UserController::class,'update'])->name('updateProfil');
+    
     Route::get('/pemesanan', function () {
         return view('pemesanan');
     });
     Route::get('/cetak_tiket', function () {
         return view('cetakTiket');
     });
+    Route::get('/', [KeberangkatanController::class, 'index']);
+    Route::get('/logout', [LoginController::class, 'logout']);
 });
 
-Route::get('/', [KeberangkatanController::class, 'index']);
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate']);

@@ -3,7 +3,7 @@
 @section('container')
     <section class="section">
         <div class="section-header">
-            <h1>Halaman Profile</h1>
+            <h1>{{ $title }}</h1>
         </div>
     </section>
 
@@ -14,34 +14,55 @@
             </div>
             <div class="card-body">
                 <div class="col-10">
-                    <form>
+                    <form action="{{ route('updateProfil', Str::ucfirst(auth()->user()->id)) }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('put') }}
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nama lengkap</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                id="exampleInputEmail1" value="{{ old('name', Str::ucfirst(auth()->user()->name)) }}"
+                                required>
+                            @error('name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
-
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Jenis Kelamin</label><br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1">
-                                <label class="form-check-label" for="inlineRadio1">Laki-laki</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Perempuan</label>
-                            </div>
+                            <label for="exampleInputPassword1">Email</label>
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                id="exampleInputPassword1" value="{{ old('email', Str::ucfirst(auth()->user()->email)) }}"
+                                required>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Alamat</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1">
+                            <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror"
+                                id="exampleInputPassword1" value="{{ old('alamat', Str::ucfirst(auth()->user()->alamat)) }}"
+                                required>
+                            @error('alamat')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputPassword1">No Telepon</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1">
+                            <input type="text" name="nohp" class="form-control @error('nohp') is-invalid @enderror"
+                                id="exampleInputPassword1" value="{{ old('nohp', Str::ucfirst(auth()->user()->nohp)) }}"
+                                required>
+                            @error('nohp')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
-                        <a href="#" class="btn btn-primary">Simpan</a>
+                        <button type="submit" class="btn btn-success">Edit Data</button>
                     </form>
                 </div>
 

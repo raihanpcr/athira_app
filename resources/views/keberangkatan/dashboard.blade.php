@@ -53,16 +53,17 @@
                                 @endif
 
                                 <td class="text-center">
-                                    <div class="row">
-                                        <button type="submit" class="btn btn-info ml-2">
-                                            Edit Data
-                                        </button>
+                                    <div class="row ">
+                                        <a href="" class="badge badge-success ml-2">Pesan</a>
+                                        <a href="{{ route('detailKeberangkatan', $i->id) }}"
+                                            class="badge badge-info ml-2">Edit
+                                            Data</a>
 
                                         <form action="{{ route('hapusKeberangkatan', $i->id) }}" method="POST"
                                             onclick="delete_button(this)">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger ml-2">
+                                            <button type="submit" class="badge badge-danger ml-2">
                                                 Hapus
                                             </button>
                                         </form>
