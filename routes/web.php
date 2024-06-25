@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeberangkatanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MobilController;
 use App\Http\Controllers\UserController;
 use App\Models\Keberangkatan;
 
@@ -26,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
     //keberangkatan
     Route::get('/formKeberangkatan', function () {
-        return view('keberangkatan');
+        return view('keberangkatan.keberangkatan');
     });
     Route::get('/keberangkatan', [KeberangkatanController::class, 'index']);
     Route::get('/detailKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'showDetail'])->name('detailKeberangkatan');
@@ -34,7 +35,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/updateDataKeberangkatan/{id}', [KeberangkatanController::class, 'update'])->name('updateDataKeberangkatan');
     Route::delete('/hapusKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'destroy'])->name('hapusKeberangkatan');
 
-    
+    //Mobile Route
+    Route::get('/mobil',[MobilController::class, 'index']);
+    Route::get('/mobil/add',[MobilController::class, 'add'])->name('formMobil');
+    Route::get('/mobil/detail/{mobil}',[MobilController::class, 'show'])->name('detailMobil');
+    Route::post('/mobil/add',[MobilController::class, 'create'])->name('tambahMobil');
+    Route::put('/mobil/updateMobil/{mobil}', [MobilController::class, 'update'])->name('updateMobil');
+    Route::delete('/mobil/{mobil}',[MobilController::class, 'destroy'])->name('hapusMobil');
+
     // Profile
     Route::get('/profile', function () {
         return view('profile');

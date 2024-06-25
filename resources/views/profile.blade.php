@@ -17,6 +17,7 @@
                     <form action="{{ route('updateProfil', Str::ucfirst(auth()->user()->id)) }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('put') }}
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nama lengkap</label>
                             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
@@ -28,6 +29,7 @@
                                 </div>
                             @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputPassword1">Email</label>
                             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
@@ -39,6 +41,7 @@
                                 </div>
                             @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label for="exampleInputPassword1">Alamat</label>
                             <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror"

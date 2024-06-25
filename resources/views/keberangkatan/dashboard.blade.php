@@ -6,6 +6,11 @@
             <h1>Halaman Dashboard</h1>
         </div>
     </section>
+    @if (session()->has('success'))
+        <div class="alert alert-success mb-2" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">Jadwal Keberangkatan</h5>
@@ -14,12 +19,18 @@
 
             {{-- TODO: Update Jadwal Keberangkatan --}}
 
-            @if (session()->has('success'))
-                <div class="alert alert-success mb-2" role="alert">
-                    {{ session('success') }}
-                </div>
-            @endif
-            <a href="/formKeberangkatan" class="btn btn-info mb-2">Tambah Keberangkatan</a>
+
+            <a href="/formKeberangkatan" class="btn btn-primary mb-2">Tambah Keberangkatan</a>
+            <button class="btn btn-secondary dropdown-toggle btn btn-info mb-2" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Pengaturan
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/mobil">Data Mobil</a>
+                <a class="dropdown-item" href="#">Data Supir</a>
+                <a class="dropdown-item" href="#">Kota Estimasi</a>
+            </div>
+
             <div class="table-responsive">
                 <table class="table table-bordered table-md">
                     <thead>
