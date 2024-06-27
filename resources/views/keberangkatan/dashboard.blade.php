@@ -27,7 +27,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="/mobil">Data Mobil</a>
-                <a class="dropdown-item" href="#">Data Supir</a>
+                <a class="dropdown-item" href="/supir">Data Supir</a>
                 <a class="dropdown-item" href="#">Kota Estimasi</a>
             </div>
 
@@ -64,21 +64,20 @@
                                 @endif
 
                                 <td class="text-center">
-                                    <div class="row ">
-                                        <a href="" class="badge badge-success ml-2">Pesan</a>
-                                        <a href="{{ route('detailKeberangkatan', $i->id) }}"
-                                            class="badge badge-info ml-2">Edit
-                                            Data</a>
 
-                                        <form action="{{ route('hapusKeberangkatan', $i->id) }}" method="POST"
-                                            onclick="delete_button(this)">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="badge badge-danger ml-2">
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    </div>
+                                    <a href="" class="btn btn-success ml-2">Pesan</a>
+                                    <a href="{{ route('detailKeberangkatan', $i->id) }}" class="btn btn-info ml-2">Edit
+                                        Data</a>
+
+                                    <form action="{{ route('hapusKeberangkatan', $i->id) }}" method="POST"
+                                        onclick="delete_button(this)">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger mt-2">
+                                            Hapus
+                                        </button>
+                                    </form>
+
                                 </td>
 
                             </tr>

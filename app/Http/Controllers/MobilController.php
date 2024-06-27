@@ -10,9 +10,7 @@ use App\Http\Requests\UpdateMobilRequest;
 
 class MobilController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $data = [
@@ -28,20 +26,15 @@ class MobilController extends Controller
             'title' => 'Tambah Data Mobil'
         ]);
     }
-    /**
-     
-    * Show the form for creating a new resource.
-     
-     */
+    
     public function create(Request $request)
     {
-        
         $data = $request->validate([
             'plat' => 'required',
             'nama' => 'required',
             'kapasitas' => 'required',
             'warna' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($request->file('foto')) {
@@ -53,17 +46,7 @@ class MobilController extends Controller
         return redirect('/mobil')->with('success','Data Mobil Berhasil Ditambahkan');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMobilRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(Mobil $mobil)
     {
         $data = [
@@ -71,30 +54,19 @@ class MobilController extends Controller
             'mobil' => $mobil
         ];
 
-        // dd($data);
         return view('mobil.updateMobile',$data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mobil $mobil)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+        
         $data = $request->validate([
             'plat' => 'required',
             'nama' => 'required',
             'kapasitas' => 'required',
             'warna' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $mobil = Mobil::findOrFail($id);
@@ -111,9 +83,7 @@ class MobilController extends Controller
         return redirect('/mobil')->with('success','Data Berhasil Diedit');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Mobil $mobil)
     {
         Storage::delete($mobil->foto);
