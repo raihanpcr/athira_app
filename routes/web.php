@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EstimasiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeberangkatanController;
@@ -27,15 +28,15 @@ Route::middleware('auth')->group(function () {
     //dashboard
 
     //keberangkatan
-    Route::get('/formKeberangkatan', function () {
-        return view('keberangkatan.keberangkatan');
-    });
+    Route::get('/formKeberangkatan', [KeberangkatanController::class, 'form']);
     Route::get('/keberangkatan', [KeberangkatanController::class, 'index']);
     Route::get('/detailKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'showDetail'])->name('detailKeberangkatan');
     Route::post('/tambahKeberangkatan', [KeberangkatanController::class, 'store']);
     Route::put('/updateDataKeberangkatan/{id}', [KeberangkatanController::class, 'update'])->name('updateDataKeberangkatan');
     Route::delete('/hapusKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'destroy'])->name('hapusKeberangkatan');
 
+    //Ordera / Pesanan
+    Route::get('/keberangkatan/order/{keberangkatan}', [KeberangkatanController::class, 'orderKeberangkatan'])->name('viewOrder');
     //Mobile Route
     Route::get('/mobil',[MobilController::class, 'index']);
     Route::get('/mobil/tambahMobil',[MobilController::class, 'add'])->name('formMobil');
@@ -51,7 +52,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/supir/addSupir',[SupirController::class, 'store'])->name('addSupir');
     Route::put('/supir/updateSupir/{supir}', [SupirController::class, 'update'])->name('updateSupir');
     Route::delete('/supir/{supir}',[SupirController::class, 'destroy'])->name('hapusSupir');
-    
+
+    //Estimasi
+    Route::get('/estimasi',[EstimasiController::class,'index']);
+    Route::get('/estimasi/tambahKota',[EstimasiController::class, 'create']);
+    Route::get('/estimasi/showKota/{estimasi}',[EstimasiController::class, 'show'])->name('showEstimasi');
+    Route::post('/estimasi/tambahKota', [EstimasiController::class, 'store'])->name('addEstimasi');
+    Route::put('/estimasi/update/{estimasi}', [EstimasiController::class, 'update'])->name('updateEstimasi');
+    Route::delete('/estimasi/hapusKota/{estimasi}', [EstimasiController::class, 'destroy'])->name('deleteEstimasi');
     // Profile
     Route::get('/profile', function () {
         return view('profile');

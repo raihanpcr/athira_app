@@ -11,4 +11,9 @@ class Mobil extends Model
     protected $connection = 'mysql';
     protected $table = 'mobil';
     protected $guarded = ['id'];
+
+    public function keberangkatan()
+    {
+        return $this->hasMany(Keberangkatan::class, 'id', 'mobil_id');
+    }
 }

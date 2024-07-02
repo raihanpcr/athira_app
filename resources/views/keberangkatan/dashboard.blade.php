@@ -28,7 +28,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="/mobil">Data Mobil</a>
                 <a class="dropdown-item" href="/supir">Data Supir</a>
-                <a class="dropdown-item" href="#">Kota Estimasi</a>
+                <a class="dropdown-item" href="/estimasi">Kota Estimasi</a>
             </div>
 
             <div class="table-responsive">
@@ -40,6 +40,8 @@
                             <th class="text-center">Keberangkatan</th>
                             <th class="text-center">Kuota Penumpang</th>
                             <th class="text-center">Waktu</th>
+                            <th class="text-center">Mobil</th>
+                            <th class="text-center">Supir</th>
                             <th class="text-center">Keterangan</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -49,10 +51,11 @@
                             <tr>
                                 <td class="text-center text-black">{{ $loop->iteration }}</td>
                                 <td class="text-center text-black">{{ $i->tanggal }}</td>
-                                <td class="text-center text-black">{{ $i->asal }} - {{ $i->tujuan }}</td>
+                                <td class="text-center text-black">{{ $i->asals->name }} - {{ $i->tujuans->name }}</td>
                                 <td class="text-center text-black">{{ $i->kuota }}</td>
                                 <td class="text-center text-black">{{ $i->pukul }}</td>
-
+                                <td class="text-center text-black">{{ $i->mobils->nama }}</td>
+                                <td class="text-center text-black">{{ $i->supirs->name }}</td>
                                 @if ($i->keterangan == 'Tersedia')
                                     <td class="text-center ">
                                         <span class="badge badge-pill badge-success">{{ $i->keterangan }}</span>
@@ -64,20 +67,20 @@
                                 @endif
 
                                 <td class="text-center">
+                                    <div class="row action-button">
+                                        <a href="{{ route('viewOrder', $i->id) }}" class="btn btn-success ml-2">Pesan</a>
+                                        <a href="{{ route('detailKeberangkatan', $i->id) }}" class="btn btn-info ml-2">Edit
+                                            Data</a>
 
-                                    <a href="" class="btn btn-success ml-2">Pesan</a>
-                                    <a href="{{ route('detailKeberangkatan', $i->id) }}" class="btn btn-info ml-2">Edit
-                                        Data</a>
-
-                                    <form action="{{ route('hapusKeberangkatan', $i->id) }}" method="POST"
-                                        onclick="delete_button(this)">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger mt-2">
-                                            Hapus
-                                        </button>
-                                    </form>
-
+                                        <form action="{{ route('hapusKeberangkatan', $i->id) }}" method="POST"
+                                            onclick="delete_button(this)">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger ml-2">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
 
                             </tr>

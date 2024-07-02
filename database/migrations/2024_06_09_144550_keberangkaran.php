@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('kuota');
             $table->string('pukul');
             $table->string('keterangan')->default('Tersedia');
+            $table->string('mobil_id');
+            $table->string('supir_id');
             $table->timestamps();
         });
     }

@@ -11,4 +11,9 @@ class Supir extends Model
     protected $connection = 'mysql';
     protected $table = 'supir';
     protected $guarded = ['id'];
+
+    public function keberangkatan()
+    {
+        return $this->hasMany(Keberangkatan::class, 'id', 'supir_id');
+    }
 }

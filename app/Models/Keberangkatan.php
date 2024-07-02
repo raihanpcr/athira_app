@@ -17,4 +17,20 @@ class Keberangkatan extends Model
             
         });
     }
+
+    public function mobils(){
+        return $this->belongsTo(Mobil::class, 'mobil_id', 'id');
+    }
+
+    public function asals(){
+        return $this->belongsTo(Estimasi::class, 'asal', 'id');
+    }
+
+    public function tujuans(){
+        return $this->belongsTo(Estimasi::class, 'tujuan', 'id');
+    }
+
+    public function supirs(){
+        return $this->belongsTo(Supir::class, 'supir_id', 'id');
+    }
 }

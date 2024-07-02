@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estimasi;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreEstimasiRequest;
 use App\Http\Requests\UpdateEstimasiRequest;
+use App\Models\Keberangkatan;
 
 class EstimasiController extends Controller
 {
@@ -13,7 +15,9 @@ class EstimasiController extends Controller
      */
     public function index()
     {
-        //
+        $data['title'] = "Estimasi";
+        $data['kota'] = Estimasi::paginate(10);
+        return view('kota.index', $data);
     }
 
     /**
@@ -21,15 +25,27 @@ class EstimasiController extends Controller
      */
     public function create()
     {
-        //
+        return view('kota.addKota');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEstimasiRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kota' => 'required',
+            'longitude' => 'required',
+            'latitude' => 'required'
+        ]);
+
+        Estimasi::create([
+            'name' => $request->input('kota'),
+            'longitude' => $request->input('longitude'),
+            'latitude' => $request->input('latitude'),
+        ]);
+
+        return redirect('/estimasi')->with('success', 'Data Kota Estimasi berhasil ditambah');
     }
 
     /**
@@ -37,30 +53,39 @@ class EstimasiController extends Controller
      */
     public function show(Estimasi $estimasi)
     {
-        //
+        $data = [
+            "title" => "Update Keberangkatan",
+            "estimasi" => $estimasi
+        ];
+
+        // dd($data);
+        return view('kota.editKota',$data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Estimasi $estimasi)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'kota' => 'required',
+            'longitude' => 'required',
+            'latitude' => 'required'
+        ]);
+
+        $data = [
+            'name' => $request->input('kota'),
+            'longitude' => $request->input('longitude'),
+            'latitude' => $request->input('latitude'),
+        ];
+
+        $kota = Estimasi::findOrFail($id);
+
+        $kota->update($data);
+
+        return redirect('/estimasi')->with('success', 'Data Kota Estimasi berhasil diubah');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEstimasiRequest $request, Estimasi $estimasi)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Estimasi $estimasi)
     {
-        //
+        $estimasi->delete();
+        return back()->with('success', 'Data berhasil dihapus');
     }
 }
