@@ -38,7 +38,11 @@
 
                         <div class="form-group">
                             <h5 class="font-weight-bold">Keterangan</h5>
-                            <p class="badge badge-pill badge-success">{{ $keberangkatan->keterangan }}</p>
+                            @if ($keberangkatan->kuota <= 0)
+                                <p class="badge badge-pill badge-danger">Kuota Penuh</p>
+                            @else
+                                <p class="badge badge-pill badge-success">{{ $keberangkatan->keterangan }}</p>
+                            @endif
                         </div>
                     </div>
                     <div class="col">
@@ -88,24 +92,29 @@
             </div>
 
         </div>
-
-
     </div>
 
-    <div class="card col-8 mt-3">
+    <div class="card col mt-3">
         <div class="card-header">
             <h5 class="card-title">Form Pemesanan</h5>
         </div>
         <div class="card-body">
-            <form action="/mobil/add" method="post" enctype="multipart/form-data">
+            <form action="/pesanan/pesan" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col">
+                        <input type="hidden" name="user" value="{{ Str::ucfirst(auth()->user()->id) }}">
+                        <input type="hidden" name="keberangkatan" value="{{ $keberangkatan->id }}">
                         <div class="form-group">
-                            <label for="">No Polisi <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('plat') is-invalid @enderror" name="plat"
-                                value="{{ old('plat') }}" aria-describedby="emailHelp">
-                            @error('plat')
+                            <label for="">Nama Pemesan<span class="text-danger">*</span></label>
+                            <p>{{ Str::ucfirst(auth()->user()->name) }}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Jumlah Bangku <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control @error('bangku') is-invalid @enderror" name="bangku"
+                                value="{{ old('bangku') }}" aria-describedby="emailHelp">
+                            @error('bangku')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -113,10 +122,22 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Nama Mobil <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama"
-                                value="{{ old('nama') }}" aria-describedby="emailHelp">
-                            @error('nama')
+                            <label for="">Link Google Maps Penjemputan</label>
+                            <input type="text" class="form-control @error('maps') is-invalid @enderror" name="maps"
+                                value="{{ old('maps') }}" aria-describedby="emailHelp">
+                            @error('maps')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="">Alamat Jemput<span class="text-danger">*</span></label>
+                            <textarea name="jemput" class="form-control @error('jemput') is-invalid @enderror" value="{{ old('jemput') }}"
+                                style="height:100px"></textarea>
+                            @error('jemput')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -124,34 +145,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Muatan Mobil <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control @error('kapasitas') is-invalid @enderror"
-                                name="kapasitas" value="{{ old('kapasitas') }}" aria-describedby="emailHelp">
-                            @error('kapasitas')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Warna Mobil <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('warna') is-invalid @enderror" name="warna"
-                                value="{{ old('warna') }}" aria-describedby="emailHelp">
-                            @error('warna')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Foto <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control @error('foto') is-invalid @enderror" name="foto"
-                                value="{{ old('foto') }}" aria-describedby="emailHelp" id="image"
-                                onchange="previewImage()">
-                            <img class="img-preview img-fluid img-thumbnail mt-3 col-sm-3">
-                            @error('foto')
+                            <label for="">Alamat Turun<span class="text-danger">*</span></label>
+                            <textarea name="turun" class="form-control @error('turun') is-invalid @enderror" id=""
+                                value="{{ old('turun') }}" style="height:100px"></textarea>
+                            @error('turun')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -159,9 +156,15 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Tambah Pemesanan</button>
-            </form>
+                @if ($keberangkatan->kuota <= 0)
+                    <button class="btn btn-danger" type="submit" disabled>Tambah Pemesanan</button>
+                @else
+                    {{-- <p class="badge badge-pill badge-success">{{ $keberangkatan->keterangan }}</p> --}}
+                    <button class="btn btn-primary" type="submit">Tambah Pemesanan</button>
+                @endif
         </div>
+        </form>
+    </div>
     </div>
     </div>
     <script>

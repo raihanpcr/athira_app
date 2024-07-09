@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('pesanans', function (Blueprint $table) {
             $table->id();
             $table->string('jml_bangku');
+            $table->string('maps');
             $table->string('jemput');
             $table->string('turun');
             $table->string('biaya');
             $table->string('keterangan');
+            $table->string('cancled')->nullable();
             $table->string('keberangkatan_id');
             $table->string('user_id');
             $table->timestamps();

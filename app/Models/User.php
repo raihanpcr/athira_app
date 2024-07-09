@@ -14,4 +14,8 @@ class User extends Authenticatable
     protected $connection = 'mysql';
     protected $table = 'users';
     protected $guarded = ['id'];
+
+    public function pesana(){
+        return $this->belongsTo(Pesanan::class, 'user_id', 'id');
+    }
 }

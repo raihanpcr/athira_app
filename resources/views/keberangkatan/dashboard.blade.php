@@ -56,19 +56,26 @@
                                 <td class="text-center text-black">{{ $i->pukul }}</td>
                                 <td class="text-center text-black">{{ $i->mobils->nama }}</td>
                                 <td class="text-center text-black">{{ $i->supirs->name }}</td>
-                                @if ($i->keterangan == 'Tersedia')
+
+                                @if ($i->kuota <= 0)
                                     <td class="text-center ">
-                                        <span class="badge badge-pill badge-success">{{ $i->keterangan }}</span>
+                                        <span class="badge badge-pill badge-danger">Kuota Penuh</span>
                                     </td>
                                 @else
                                     <td class="text-center ">
-                                        <span class="badge badge-pill badge-danger">{{ $i->keterangan }}</span>
+                                        <span class="badge badge-pill badge-success">{{ $i->keterangan }}</span>
                                     </td>
                                 @endif
 
+
                                 <td class="text-center">
                                     <div class="row action-button">
-                                        <a href="{{ route('viewOrder', $i->id) }}" class="btn btn-success ml-2">Pesan</a>
+                                        @if ($i->tanggal >= date('Y-m-d'))
+                                            <a href="{{ route('viewOrder', $i->id) }}"
+                                                class="btn btn-success ml-2">Pesan</a>
+                                        @else
+                                            <a class="btn btn-danger text-white ml-2" onclick="return false;">Kadaluarsa</a>
+                                        @endif
                                         <a href="{{ route('detailKeberangkatan', $i->id) }}" class="btn btn-info ml-2">Edit
                                             Data</a>
 

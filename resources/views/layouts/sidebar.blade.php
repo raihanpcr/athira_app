@@ -12,7 +12,7 @@
             <li><a class="nav-link" href="{{ route('detailProfil', Str::ucfirst(auth()->user()->id)) }}"><i
                         class="fa fa-solid fa-user"></i> <span>Profile</span></a>
             </li>
-            <li><a class="nav-link" href="/pemesanan"><i class="fa fa-solid fa-book"></i>
+            <li><a class="nav-link" href="/pesanan"><i class="fa fa-solid fa-book"></i>
                     <span>Pemesanan</span></a></li>
             <li><a class="nav-link" href="/pembayaran"><i class="fa fa-solid fa-credit-card"></i>
                     <span>Pembayaran</span></a></li>

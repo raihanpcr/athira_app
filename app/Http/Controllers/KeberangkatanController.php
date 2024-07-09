@@ -58,6 +58,9 @@ class KeberangkatanController extends Controller
 
         $data= [
             "title"=>"Update Keberangkatan",
+            "estimasi" => Estimasi::get(),
+            "mobil" => Mobil::get(),
+            "supir" => Supir::get(),
             "keberangkatan"=>$keberangkatan
         ];
         // dd($data);
@@ -75,7 +78,7 @@ class KeberangkatanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'tanggal' => 'required',
             'kuota' => 'required',
             'pukul' => 'required',
@@ -83,12 +86,23 @@ class KeberangkatanController extends Controller
             'tujuan' => 'required',
         ]);
 
+        $data = [
+            'tanggal' => $request->input('tanggal'),
+            'kuota' => $request->input('kuota'),
+            'pukul' => $request->input('pukul'),
+            'asal' => $request->input('asal'),
+            'tujuan' => $request->input('tujuan'),
+            'mobil_id' => $request->input('mobil'),
+            'supir_id' => $request->input('supir')
+        ];
+
         // dd($validatedData);
+
         $keberangkatan = Keberangkatan::findOrFail($id);
 
         // dd($keberangkatan);
 
-        $keberangkatan->update($validatedData);
+        $keberangkatan->update($data);
 
         return redirect('/keberangkatan')->with('success', 'Data berhasil diedit');
     }

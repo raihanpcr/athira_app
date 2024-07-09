@@ -33,4 +33,8 @@ class Keberangkatan extends Model
     public function supirs(){
         return $this->belongsTo(Supir::class, 'supir_id', 'id');
     }
+
+    public function pesanan(){
+        return $this->hasMany(Pesanan::class, 'keberangkatan_id', 'id');
+    }
 }

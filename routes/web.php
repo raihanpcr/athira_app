@@ -6,9 +6,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeberangkatanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MobilController;
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\SupirController;
 use App\Http\Controllers\UserController;
 use App\Models\Keberangkatan;
+use App\Models\Pesanan;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/hapusKeberangkatan/{keberangkatan}', [KeberangkatanController::class, 'destroy'])->name('hapusKeberangkatan');
 
     //Ordera / Pesanan
+    Route::get('/pesanan', [PesananController::class, 'index']);
     Route::get('/keberangkatan/order/{keberangkatan}', [KeberangkatanController::class, 'orderKeberangkatan'])->name('viewOrder');
+    Route::get('/pesanan/cancle/{pesanan}', [PesananController::class, 'show'])->name('cancleForm');
+    Route::post('/pesanan/cancle/{pesanan}', [PesananController::class, 'cancled'])->name('canclePesanan');
+    Route::post('/pesanan/pesan', [PesananController::class, 'store'])->name('addOrder');
+
+    //bayar
+    Route::get('/pembayaran', [PesananController::class, 'bayar']);
+    Route::post('/pembayaran/{pesanan}', [PesananController::class, 'konfirmasiPembayaran'])->name('konfirmasiPembayaran');
+
     //Mobile Route
     Route::get('/mobil',[MobilController::class, 'index']);
     Route::get('/mobil/tambahMobil',[MobilController::class, 'add'])->name('formMobil');
@@ -68,9 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/detail/{id}', [UserController::class,'showProfile'])->name('detailProfil');
     Route::put('/profile/update/{id}', [UserController::class,'update'])->name('updateProfil');
     
-    Route::get('/pemesanan', function () {
-        return view('pemesanan');
-    });
+    Route::get('/pemesanan', [PesananController::class, 'index']);
     Route::get('/cetak_tiket', function () {
         return view('cetakTiket');
     });
