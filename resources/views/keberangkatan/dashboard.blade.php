@@ -70,11 +70,13 @@
 
                                 <td class="text-center">
                                     <div class="row action-button">
-                                        @if ($i->tanggal >= date('Y-m-d'))
+                                        @if ($i->tanggal > date('Y-m-d'))
                                             <a href="{{ route('viewOrder', $i->id) }}"
                                                 class="btn btn-success ml-2">Pesan</a>
                                         @else
-                                            <a class="btn btn-danger text-white ml-2" onclick="return false;">Kadaluarsa</a>
+                                            <a class="btn btn-danger text-white ml-2"
+                                                onclick="return false;">Kadaluwarsa</a>
+                                            {{-- {{ date('d/m/Y') }} --}}
                                         @endif
                                         <a href="{{ route('detailKeberangkatan', $i->id) }}" class="btn btn-info ml-2">Edit
                                             Data</a>

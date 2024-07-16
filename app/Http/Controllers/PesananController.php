@@ -44,7 +44,7 @@ class PesananController extends Controller
             'kuota' => $new_jumlah
         ]);
 
-        return redirect('/pesanan')->with('success', 'Data berhasil ditambah');
+        return redirect('/pesanan')->with('success', 'Pesanan Berhasil Dibatalkan');
     }
 
     public function store(Request $request)
@@ -89,6 +89,17 @@ class PesananController extends Controller
         return view('pemesanan.cancle',$data);
     }
 
+    public function showDetail(Pesanan $pesanan){
+        $data = [
+            "title" => "Detail Pesanan",
+            "pesanan" => $pesanan::with(['pemesan','keberangkatan','keberangkatan.mobils','keberangkatan.tujuans','keberangkatan.asals'])->first()
+        ];
+
+        // dd($data);
+
+        return view('pemesanan.detail',$data);
+    }
+
     public function bayar()
     {
         $data['title'] = "Pembayaran";
@@ -101,6 +112,30 @@ class PesananController extends Controller
         return view('pemesanan.pembayaran',$data);
     }
 
+    public function viewPdf(Pesanan $pesanan){
+        
+        // dd($pesanan::with(['pemesan', 'keberangkatan', 'keberangkatan.mobils', 'keberangkatan.tujuans', 'keberangkatan.asals'])->first());
+        $pesanans = $pesanan::with(['pemesan', 'keberangkatan', 'keberangkatan.mobils', 'keberangkatan.tujuans', 'keberangkatan.asals'])->first();
+        $mpdf = new \Mpdf\Mpdf(['format' => 'Legal']);
+        $mpdf->AddPage('L');
+        $mpdf->SetWatermarkText('PT. ATHIRA TRAVEL');
+
+        // Set the watermark to be displayed
+        $mpdf->showWatermarkText = true;
+
+        // Optionally, you can adjust the watermark properties
+        $mpdf->watermarkTextAlpha = 0.1; // Transparency of the watermark
+        $mpdf->watermark_font = 'DejaVuSansCondensed'; // Font for the watermark
+        $mpdf->WriteHTML(view('pemesanan.tiket', [
+            "title" => "Detail Pesanan",
+            "pesanans" => $pesanans
+        ])->render());
+        // $filename = 'Detail_Pesanan.pdf';
+
+        // Output the PDF to the browser with the specified filename
+        $mpdf->Output('', '');
+        
+    }
     /**
      * Update the specified resource in storage.
      */

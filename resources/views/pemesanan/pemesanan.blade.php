@@ -6,7 +6,11 @@
             <h1>Halaman {{ $title }}</h1>
         </div>
     </section>
-
+    @if (session()->has('success'))
+        <div class="alert alert-success mb-2" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="section-body">
         <div class="card">
             <div class="card-header">
@@ -17,6 +21,7 @@
                     <table class="table table-bordered table-md">
                         <thead>
                             <tr>
+                                <th class="text-center">ID Pesanan</th>
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Rute</th>
                                 <th class="text-center">Waktu</th>
@@ -25,12 +30,18 @@
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Tiket</th>
                                 <th class="text-center">Aksi</th>
+                                <th class="text-center">Ubah Tanggal</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pesanan as $psn)
                                 <tr>
                                     @foreach ($psn->keberangkatan as $item)
+                                        <td class="text-center text-black ">
+                                            <p class="font-weight-bold text-uppercase">
+                                                PSN/{{ $item->id }}/{{ $item->asals->name }}/{{ $item->tujuans->name }}/{{ $psn->id }}
+                                            </p>
+                                        </td>
                                         <td class="text-center text-black">{{ $item->tanggal }}</td>
                                         <td class="text-center text-black">{{ $item->asals->name }} -
                                             {{ $item->tujuans->name }}</td>
@@ -49,7 +60,8 @@
                                             <button class="btn btn-danger" disabled>Batal</button>
                                         </td>
                                     @else
-                                        <td class="text-center text-black"><button class="btn btn-info">Cetak</button>
+                                        <td class="text-center text-black"> <a href="{{ route('viewPDF', $psn->id) }}"
+                                                class="badge badge-info">Cetak</a>
                                         </td>
                                         @foreach ($psn->keberangkatan as $item)
                                             @if ($item->tanggal <= date('Y-m-d'))
@@ -64,8 +76,9 @@
                                             @endif
                                         @endforeach
                                     @endif
-
-
+                                    <td class="text-center text-black">
+                                        <a href="{{ route('cancleForm', $psn->id) }}" class="btn btn-warning">Ajukan</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

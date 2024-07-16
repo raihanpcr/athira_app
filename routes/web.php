@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesanan', [PesananController::class, 'index']);
     Route::get('/keberangkatan/order/{keberangkatan}', [KeberangkatanController::class, 'orderKeberangkatan'])->name('viewOrder');
     Route::get('/pesanan/cancle/{pesanan}', [PesananController::class, 'show'])->name('cancleForm');
+    Route::get('/pesanan/detail/{pesanan}', [PesananController::class, 'showDetail'])->name('showPesanan');
+    Route::get('/pesanan/tiket/{pesanan}', [PesananController::class, 'viewPDF'])->name('viewPDF');
     Route::post('/pesanan/cancle/{pesanan}', [PesananController::class, 'cancled'])->name('canclePesanan');
     Route::post('/pesanan/pesan', [PesananController::class, 'store'])->name('addOrder');
 
