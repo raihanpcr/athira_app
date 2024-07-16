@@ -4,6 +4,7 @@ use App\Http\Controllers\EstimasiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeberangkatanController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PesananController;
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
     //bayar
     Route::get('/pembayaran', [PesananController::class, 'bayar']);
     Route::post('/pembayaran/{pesanan}', [PesananController::class, 'konfirmasiPembayaran'])->name('konfirmasiPembayaran');
+
+    //report
+    Route::get('/laporan', [LaporanController::class, 'index']);
 
     //Mobile Route
     Route::get('/mobil',[MobilController::class, 'index']);

@@ -68,11 +68,15 @@ class KeberangkatanController extends Controller
     }
 
     public function orderKeberangkatan( Keberangkatan $keberangkatan){
+
+        
         $data = [
             "title" => "Info Keberangkatan",
-            "keberangkatan" => $keberangkatan::with(['mobils','supirs','asals','tujuans'])->first()
+            "keberangkatan" => $keberangkatan::with(['mobils','supirs','asals','tujuans'])->findOrFail($keberangkatan->id)
         ];
+
         // dd($data);
+        
         return view('orders.addKeberangkatan',$data);
     }
 

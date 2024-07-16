@@ -95,8 +95,6 @@ class PesananController extends Controller
             "pesanan" => $pesanan::with(['pemesan','keberangkatan','keberangkatan.mobils','keberangkatan.tujuans','keberangkatan.asals'])->first()
         ];
 
-        // dd($data);
-
         return view('pemesanan.detail',$data);
     }
 
@@ -107,15 +105,13 @@ class PesananController extends Controller
         ->orderBy('id','desc')
         ->paginate(10);
 
-        // dd($data);
-
         return view('pemesanan.pembayaran',$data);
     }
 
     public function viewPdf(Pesanan $pesanan){
         
         // dd($pesanan::with(['pemesan', 'keberangkatan', 'keberangkatan.mobils', 'keberangkatan.tujuans', 'keberangkatan.asals'])->first());
-        $pesanans = $pesanan::with(['pemesan', 'keberangkatan', 'keberangkatan.mobils', 'keberangkatan.tujuans', 'keberangkatan.asals'])->first();
+        $pesanans = $pesanan::with(['pemesan', 'keberangkatan', 'keberangkatan.mobils', 'keberangkatan.tujuans', 'keberangkatan.asals'])->findOrFail($pesanan->id);
         $mpdf = new \Mpdf\Mpdf(['format' => 'Legal']);
         $mpdf->AddPage('L');
         $mpdf->SetWatermarkText('PT. ATHIRA TRAVEL');

@@ -19,17 +19,18 @@
 
             {{-- TODO: Update Jadwal Keberangkatan --}}
 
-
-            <a href="/formKeberangkatan" class="btn btn-primary mb-2">Tambah Keberangkatan</a>
-            <button class="btn btn-secondary dropdown-toggle btn btn-info mb-2" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Pengaturan
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/mobil">Data Mobil</a>
-                <a class="dropdown-item" href="/supir">Data Supir</a>
-                <a class="dropdown-item" href="/estimasi">Kota Estimasi</a>
-            </div>
+            @can('AdminAccess', App\Models\User::class)
+                <a href="/formKeberangkatan" class="btn btn-primary mb-2">Tambah Keberangkatan</a>
+                <button class="btn btn-secondary dropdown-toggle btn btn-info mb-2" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Pengaturan
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/mobil">Data Mobil</a>
+                    <a class="dropdown-item" href="/supir">Data Supir</a>
+                    <a class="dropdown-item" href="/estimasi">Kota Estimasi</a>
+                </div>
+            @endcan
 
             <div class="table-responsive">
                 <table class="table table-bordered table-md">
@@ -70,25 +71,29 @@
 
                                 <td class="text-center">
                                     <div class="row action-button">
-                                        @if ($i->tanggal > date('Y-m-d'))
-                                            <a href="{{ route('viewOrder', $i->id) }}"
-                                                class="btn btn-success ml-2">Pesan</a>
-                                        @else
-                                            <a class="btn btn-danger text-white ml-2"
-                                                onclick="return false;">Kadaluwarsa</a>
-                                            {{-- {{ date('d/m/Y') }} --}}
-                                        @endif
-                                        <a href="{{ route('detailKeberangkatan', $i->id) }}" class="btn btn-info ml-2">Edit
-                                            Data</a>
+                                        @can('PelangganAccess', App\Models\User::class)
+                                            @if ($i->tanggal > date('Y-m-d'))
+                                                <a href="{{ route('viewOrder', $i->id) }}"
+                                                    class="btn btn-success ml-2">Pesan</a>
+                                            @else
+                                                <a class="btn btn-danger text-white ml-2"
+                                                    onclick="return false;">Kadaluwarsa</a>
+                                                {{-- {{ date('d/m/Y') }} --}}
+                                            @endif
+                                        @endcan
+                                        @can('AdminAccess', App\Models\User::class)
+                                            <a href="{{ route('detailKeberangkatan', $i->id) }}" class="btn btn-info ml-2">Edit
+                                                Data</a>
 
-                                        <form action="{{ route('hapusKeberangkatan', $i->id) }}" method="POST"
-                                            onclick="delete_button(this)">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger ml-2">
-                                                Hapus
-                                            </button>
-                                        </form>
+                                            {{-- <form action="{{ route('hapusKeberangkatan', $i->id) }}" method="POST"
+                                                onclick="delete_button(this)">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger ml-2">
+                                                    Hapus
+                                                </button>
+                                            </form> --}}
+                                        @endcan
                                     </div>
                                 </td>
 
