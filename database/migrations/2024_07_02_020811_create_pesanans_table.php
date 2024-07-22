@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('cancled')->nullable();
             $table->string('keberangkatan_id');
             $table->string('user_id');
-            $table->string('update_tanggal')->nullable();
+            $table->date('update_tanggal')->nullable();
             $table->string('is_update_tanggal')->nullable();
             $table->timestamps();
         });

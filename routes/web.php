@@ -46,13 +46,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesanan/tiket/{pesanan}', [PesananController::class, 'viewPDF'])->name('viewPDF');
     Route::post('/pesanan/cancle/{pesanan}', [PesananController::class, 'cancled'])->name('canclePesanan');
     Route::post('/pesanan/pesan', [PesananController::class, 'store'])->name('addOrder');
-
+    Route::get('/pesanan/ubahTanggal/{pesanan}', [PesananController::class, 'ubahTanggal'])->name('ubahTanggal');
+    Route::post('/pesanan/ubahTanggal/{pesanan}', [PesananController::class, 'updateTanggal'])->name('updateTanggal');
+    
+    Route::get('/pesanan/konfirmasi/{pesanan}', [PesananController::class, 'konfirmasiTanggal'])->name('konfirmasiTanggal');
+    Route::get('/pesanan/cancleTanggal/{pesanan}', [PesananController::class, 'cancleTanggal'])->name('cancleTanggal');
     //bayar
     Route::get('/pembayaran', [PesananController::class, 'bayar']);
     Route::post('/pembayaran/{pesanan}', [PesananController::class, 'konfirmasiPembayaran'])->name('konfirmasiPembayaran');
 
     //report
-    Route::get('/laporan', [LaporanController::class, 'index']);
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
+    Route::get('report/export', [LaporanController::class, 'export'])->name('report.export');
+
 
     //Mobile Route
     Route::get('/mobil',[MobilController::class, 'index']);

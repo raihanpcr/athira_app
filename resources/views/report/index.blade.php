@@ -13,6 +13,44 @@
                 <h5 class="card-title">{{ $title }}</h5>
             </div>
             <div class="card-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <form class="form-inline" action="{{ route('laporan') }}" method="GET">
+
+                            <div class="form-group">
+                                <input id="first_name" type="month"
+                                    class="form-control @error('bulan') is-invalid @enderror" name="bulan" autofocus
+                                    value="{{ old('bulan') }}">
+                            </div>
+
+                            &nbsp;
+
+                            <div class="form-group">
+                                <select name="mobil" id="" class="form-control">
+                                    @foreach ($mobil as $m)
+                                        <option value="{{ $m->id }}">{{ $m->plat }} - {{ $m->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Lihat</button>
+
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <div class="form-group">
+                                <a href="/laporan" class="btn btn-danger">Reset Filter</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group col-6">
+                    <a href="{{ route('report.export', request(['bulan', 'mobil'])) }}" class="btn btn-primary">Export
+                        to
+                        Excel</a>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-md">
                         <thead>
@@ -25,7 +63,8 @@
                                 <th class="text-center">Pemesan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Tiket</th>
-
+                                <th class="text-center">Perubahan Tanggal</th>
+                                <th class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,12 +100,15 @@
                                         </td>
                                     @else
                                         <td class="text-center text-black">
-                                            <form action="{{ route('konfirmasiPembayaran', $psn->id) }}" method="POST">
+                                            <p class="badge badge-warning">{{ $psn->keterangan }}</p>
+                                            {{-- <form action="{{ route('konfirmasiPembayaran', $psn->id) }}" method="POST">
                                                 @csrf
                                                 <button class="btn btn-info">Konfirmasi Pembayaran</button>
-                                            </form>
+                                            </form> --}}
                                         </td>
                                     @endif
+                                    <td class="text-center text-black">{{ $psn->update_tanggal }}</td>
+                                    <td class="text-center text-black">{{ $psn->is_update_tanggal }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

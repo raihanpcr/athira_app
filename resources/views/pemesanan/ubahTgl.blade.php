@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
 
-                <form action="{{ route('canclePesanan', $pesanan->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('updateTanggal', $pesanan->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col">
@@ -23,10 +23,10 @@
                             @endforeach
 
                             <div class="form-group">
-                                <label for="">Alasan Pembatalan <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('alasan') is-invalid @enderror"
-                                    name="alasan" value="{{ old('alasan') }}" aria-describedby="emailHelp">
-                                @error('alasan')
+                                <label for="">Perubahan Tanggal <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                    name="date" value="{{ old('date') }}" aria-describedby="emailHelp">
+                                @error('date')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

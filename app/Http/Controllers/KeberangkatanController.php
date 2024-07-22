@@ -14,8 +14,9 @@ class KeberangkatanController extends Controller
     {
         // $data['keberangkatan'] = Keberangkatan::paginate(10);
         $data['keberangkatan'] = Keberangkatan::with(['mobils','supirs','asals','tujuans'])->paginate(10);
-        // $keberangkatan = Keberangkatan::with(['mobils','supirs'])->paginate(10);
-        // dd($data);
+        $data['mobil'] = Mobil::paginate(5);
+        $data['supir'] = Supir::paginate(5);
+
         return view('keberangkatan.dashboard', $data);
     }
 

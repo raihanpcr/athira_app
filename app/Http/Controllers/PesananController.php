@@ -37,8 +37,6 @@ class PesananController extends Controller
         ]);
         $keberangkatan = Keberangkatan::findOrFail($request->input('bangku'));
         $new_jumlah = $keberangkatan->kuota + $request->input('jml_bangku');    
-        // dd($keberangkatan);
-        
 
         $keberangkatan->update([
             'kuota' => $new_jumlah
@@ -126,15 +124,11 @@ class PesananController extends Controller
             "title" => "Detail Pesanan",
             "pesanans" => $pesanans
         ])->render());
-        // $filename = 'Detail_Pesanan.pdf';
-
-        // Output the PDF to the browser with the specified filename
+    
         $mpdf->Output('', '');
         
     }
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function konfirmasiPembayaran(Pesanan $pesanan)
     {
         $pesanan->update([
@@ -144,6 +138,52 @@ class PesananController extends Controller
         return redirect('/pembayaran')->with('success', 'Data berhasil ditambah');
     }
 
+    public function ubahTanggal(Pesanan $pesanan){
+        $data = [
+            'title' => "Ubah tanggal",
+            'pesanan' => $pesanan
+        ];
+
+        return view('pemesanan.ubahTgl', $data);
+    }
+
+    public function updateTanggal(Request $request, $id){
+        
+        $data = [
+            'update_tanggal' => $request->input('date')
+        ];
+
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update($data);
+        
+        return redirect('/pesanan')->with('success', 'Tanggal Berhasil Diajukan');
+
+    }
+
+    public function konfirmasiTanggal($id){
+        $data = [
+            'is_update_tanggal' => 'Konfirmasi',
+        ];
+
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update($data);
+
+        return redirect('/pembayaran')->with('success', 'Perubahan Tanggal Berhasil Dikonfirmasi');
+    }
+
+    public function cancleTanggal($id){
+        $data = [
+            'is_update_tanggal' => 'Tidak Disetujui',
+        ];
+
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update($data);
+
+        return redirect('/pembayaran')->with('success', 'Perubahan Tanggal Tidak Disetujui');
+    }
     /**
      * Remove the specified resource from storage.
      */

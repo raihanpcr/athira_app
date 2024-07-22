@@ -25,7 +25,8 @@
                                 <th class="text-center">Pemesan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Tiket</th>
-
+                                <th class="text-center">Pengajuan Tanggal</th>
+                                <th class="text-center">Perubahan Tanggal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,6 +68,27 @@
                                             </form>
                                         </td>
                                     @endif
+                                    <td class="text-center text-balck">
+                                        @if ($psn->update_tanggal == null)
+                                            -
+                                        @else
+                                            {{ $psn->update_tanggal }}
+                                        @endif
+                                    </td>
+                                    <td class="text-center text-balck">
+                                        @if ($psn->update_tanggal == null)
+                                            <div class="badge badge-info">Belum Ada Pengajuan</div>
+                                        @elseif($psn->update_tanggal != null && $psn->is_update_tanggal == null)
+                                            <a href="{{ route('konfirmasiTanggal', $psn->id) }}"
+                                                class="btn btn-info">Konfirmasi</a><br><br>
+                                            <a href="{{ route('cancleTanggal', $psn->id) }}" class="btn btn-danger">Tidak
+                                                Disetujui</a>
+                                        @elseif($psn->is_update_tanggal == 'Konfirmasi')
+                                            <div class="badge badge-success">Telah Dikonfirmasi</div>
+                                        @elseif($psn->is_update_tanggal == 'Tidak Disetujui')
+                                            <div class="badge badge-danger">Tidak Disetujui</div>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

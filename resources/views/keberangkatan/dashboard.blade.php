@@ -105,4 +105,69 @@
             {{ $keberangkatan->links() }}
         </div>
     </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">List Mobil</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-md">
+                            <thead>
+                                <th>Plat</th>
+                                <th>Mobil</th>
+                                <th>Foto</th>
+                            </thead>
+                            <tbody>
+                                @foreach ($mobil as $i)
+                                    <tr>
+                                        <td class="text-center">{{ $i->plat }}</td>
+                                        <td class="text-center">{{ $i->nama }}</td>
+                                        <td class="text-center">
+                                            <img src="{{ asset('storage/' . $i->foto) }}" alt="user" width="100"
+                                                class="img-thumbnail" />
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{ $mobil->links() }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">List Supir</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-md">
+                            <thead>
+                                <th>Nama</th>
+                                <th>Kontak</th>
+                                <th>Foto</th>
+                            </thead>
+                            <tbody>
+                                @foreach ($supir as $i)
+                                    <tr>
+                                        <td class="text-center">{{ $i->name }}</td>
+                                        <td class="text-center">{{ $i->nohp }}</td>
+                                        <td class="text-center"><img src="{{ asset('storage/' . $i->foto) }}"
+                                                alt="user" width="100" class="img-thumbnail" /></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{ $supir->links() }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection

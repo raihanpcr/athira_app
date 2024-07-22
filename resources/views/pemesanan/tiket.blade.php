@@ -44,6 +44,7 @@
                 <td>Tanggal</td>
                 <td>{{ $keberangkatan->tanggal }}</td>
             </tr>
+
             <tr>
                 <td>Waktu</td>
                 <td>{{ $keberangkatan->pukul }}</td>
@@ -77,6 +78,11 @@
             <td style="border: 1px solid black;
             padding: 8px;
             text-align: left;">Biaya</td>
+            <td style="border: 1px solid black;
+            padding: 8px;
+            text-align: left;">Perubahan
+                tanggal</td>
+
         </tr>
         <tr style="border: 1px solid black; padding: 8px; text-align: left;">
             @foreach ($pesanans->keberangkatan as $keberangkatan)
@@ -91,6 +97,9 @@
                 {{ $pesanans->jml_bangku }}</td>
             <td style="border: 1px solid black;padding: 8px;text-align: left;">Rp.
                 {{ number_format($pesanans->biaya, 0, ',', '.') }}</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">
+                {{ $pesanans->update_tanggal }}
+            </td>
         </tr>
     </table>
     <br>

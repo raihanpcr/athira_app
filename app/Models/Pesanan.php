@@ -12,6 +12,7 @@ class Pesanan extends Model
     protected $table = 'pesanans';
     protected $guarded = ['id'];
 
+    
     public function keberangkatan()
     {
         return $this->hasMany(Keberangkatan::class, 'id', 'keberangkatan_id');

@@ -31,6 +31,7 @@
                                 <th class="text-center">Tiket</th>
                                 <th class="text-center">Aksi</th>
                                 <th class="text-center">Ubah Tanggal</th>
+                                <th class="text-center">Status Ubah Tanggal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,8 +77,25 @@
                                             @endif
                                         @endforeach
                                     @endif
+
                                     <td class="text-center text-black">
-                                        <a href="{{ route('cancleForm', $psn->id) }}" class="btn btn-warning">Ajukan</a>
+                                        @if ($psn->update_tanggal == null)
+                                            <a href="{{ route('ubahTanggal', $psn->id) }}"
+                                                class="btn btn-warning">Ajukan</a>
+                                        @else
+                                            {{ $psn->update_tanggal }}
+                                        @endif
+                                    </td>
+                                    <td class="text-center text-black">
+                                        @if ($psn->update_tanggal == null)
+                                            Belum Ada Pengajuan
+                                        @elseif($psn->update_tanggal != null && $psn->is_update_tanggal == null)
+                                            <div class="badge badge-warning">Menunggu Konfirmasi</div>
+                                        @elseif($psn->is_update_tanggal == 'Konfirmasi')
+                                            <div class="badge badge-success">Telah Dikonfirmasi</div>
+                                        @elseif($psn->is_update_tanggal == 'Tidak Disetujui')
+                                            <div class="badge badge-danger">Tidak Disetujui</div>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
