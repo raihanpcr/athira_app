@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Batalkan Pesanan</button>
+                    <button class="btn btn-primary" type="submit">Ajukan Perubahan</button>
                 </form>
             </div>
         </div>
