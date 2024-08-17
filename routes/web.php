@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/pesanan/konfirmasi/{pesanan}', [PesananController::class, 'konfirmasiTanggal'])->name('konfirmasiTanggal');
     Route::get('/pesanan/cancleTanggal/{pesanan}', [PesananController::class, 'cancleTanggal'])->name('cancleTanggal');
+    Route::put('/pesanan/updatePesanan/{pesanan}', [PesananController::class, 'updateTambahPesanan'])->name('updatePesanan');
+    Route::get('/pesanan/details/{pesanan}', [PesananController::class, 'showUpdateDetail'])->name('detailPesanan');
     //bayar
     Route::get('/pembayaran', [PesananController::class, 'bayar']);
     Route::post('/pembayaran/{pesanan}', [PesananController::class, 'konfirmasiPembayaran'])->name('konfirmasiPembayaran');

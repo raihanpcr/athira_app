@@ -77,6 +77,34 @@ class PesananController extends Controller
         return redirect('/pesanan')->with('success', 'Data berhasil ditambah');
     }
 
+    public function updateTambahPesanan(Request $request, $id){
+        $request->validate([
+            'jumlah' => 'required',
+        ]);
+
+        $data = [
+            'biaya' => $request->input('jumlah') * 150000
+        ];
+
+        $jumlah = Pesanan::findOrFail($id);
+
+        $jumlah->update($data);
+
+        return redirect('/pesanan')->with('success', 'Jumlah Bangku Berhasil Ditambah');
+    }
+
+    public function showUpdateDetail(Pesanan $pesanan)
+    {
+        $data = [
+            "title" => "Tambah Pesanan",
+            "pesanan" => $pesanan
+        ];
+
+        // dd($data);
+
+        return view('pemesanan.editPesanan',$data);
+    }
+
     public function show(Pesanan $pesanan)
     {
         $data = [

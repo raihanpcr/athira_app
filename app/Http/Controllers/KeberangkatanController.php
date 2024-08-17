@@ -39,6 +39,14 @@ class KeberangkatanController extends Controller
             'tujuan' => 'required',
         ]);
 
+        $existingSchedule = Keberangkatan::where('supir_id', $request->input('supir'))
+                            ->where('tanggal', $request->input('tanggal'))
+                            ->first();
+
+        if ($existingSchedule) {
+            return redirect()->back()->withErrors(['supir' => 'Supir sudah terjadwal pada tanggal dan waktu tersebut.'])->withInput();
+        }
+
         $data = [
             'tanggal' => $request->input('tanggal'),
             'kuota' => $request->input('kuota'),

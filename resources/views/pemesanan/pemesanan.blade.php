@@ -30,7 +30,7 @@
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Tiket</th>
                                 <th class="text-center">Aksi</th>
-                                <th class="text-center">Ubah Tanggal</th>
+                                <th class="text-center">Perubahan</th>
                                 <th class="text-center">Status Ubah Tanggal</th>
                             </tr>
                         </thead>
@@ -43,6 +43,7 @@
                                                 PSN/{{ $item->id }}/{{ $item->asals->name }}/{{ $item->tujuans->name }}/{{ $psn->id }}
                                             </p>
                                         </td>
+
                                         <td class="text-center text-black">{{ $item->tanggal }}</td>
                                         <td class="text-center text-black">{{ $item->asals->name }} -
                                             {{ $item->tujuans->name }}</td>
@@ -53,6 +54,15 @@
 
                                     <td class="text-center text-black">Rp. {{ number_format($psn->biaya, 0, ',', '.') }}
                                     </td>
+
+                                    {{-- TODO : Revisi pembatalan --}}
+                                    @php
+                                        // Hitung perbedaan hari antara tanggal keberangkatan dan tanggal hari ini
+                                        $diff = \Carbon\Carbon::parse($item->tanggal)->diffInDays(
+                                            \Carbon\Carbon::now(),
+                                        );
+                                    @endphp
+
                                     @if ($psn->cancled != null)
                                         <td class="text-center text-black">
                                             <p class="badge badge-danger">Pesanan Telah dibatalkan</p>
@@ -64,8 +74,9 @@
                                         <td class="text-center text-black"> <a href="{{ route('viewPDF', $psn->id) }}"
                                                 class="badge badge-info">Cetak</a>
                                         </td>
+
                                         @foreach ($psn->keberangkatan as $item)
-                                            @if ($item->tanggal <= date('Y-m-d'))
+                                            @if ($item->tanggal <= date('Y-m-d') || $diff <= 1)
                                                 <td class="text-center text-black">
                                                     <button class="btn btn-danger" disabled>Batal</button>
                                                 </td>
@@ -80,8 +91,11 @@
 
                                     <td class="text-center text-black">
                                         @if ($psn->update_tanggal == null)
-                                            <a href="{{ route('ubahTanggal', $psn->id) }}"
-                                                class="btn btn-warning">Ajukan</a>
+                                            <a href="{{ route('ubahTanggal', $psn->id) }}" class="btn btn-warning"><i
+                                                    class="fas fa-calendar-alt"></i></a>
+                                            <a href="{{ route('detailPesanan', $psn->id) }}" class="btn btn-info">
+                                                <i class="fas fa-chair"></i>
+                                            </a>
                                         @else
                                             {{ $psn->update_tanggal }}
                                         @endif
@@ -101,6 +115,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <span class="text-danger">* <i>Pesanan Tidak Bisa Dibatalkan Sehari Sebelum Keberangkatan</i></span>
                     {{ $pesanan->links() }}
                 </div>
 
