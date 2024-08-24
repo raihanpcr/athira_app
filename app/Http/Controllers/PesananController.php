@@ -100,8 +100,6 @@ class PesananController extends Controller
             "pesanan" => $pesanan
         ];
 
-        // dd($data);
-
         return view('pemesanan.editPesanan',$data);
     }
 

@@ -57,7 +57,6 @@
 
                                     {{-- TODO : Revisi pembatalan --}}
                                     @php
-                                        // Hitung perbedaan hari antara tanggal keberangkatan dan tanggal hari ini
                                         $diff = \Carbon\Carbon::parse($item->tanggal)->diffInDays(
                                             \Carbon\Carbon::now(),
                                         );
