@@ -23,7 +23,7 @@
                             <tr>
                                 <th class="text-center">ID Pesanan</th>
                                 <th class="text-center">Tanggal</th>
-                                <th class="text-center">Rute</th>
+                                <th class="text-center">Rute Perjalanan</th>
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Mobil</th>
                                 <th class="text-center">Supir</th>
